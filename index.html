@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hành Trình Chuyển Đổi Số & Ứng Dụng AI | Kỹ Sư Thẩm Định Dự Án</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Merriweather cho phong cách báo chí sâu sắc -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                    },
+                    colors: {
+                        evn: {
+                            blue: '#004B8D',
+                            dark: '#0A192F',
+                            gold: '#D4AF37',
+                            accent: '#38BDF8'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Thanh cuộn tiến trình đọc */
+        #progress-bar {
+            transition: width 0.1s ease-out;
+        }
+        /* Hiệu ứng nền lưới kỹ thuật xây dựng kết hợp AI */
+        .tech-grid-bg {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        .dark-glass-card {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+        }
+        /* Drop cap cho đoạn văn đầu tiên */
+        .drop-cap::first-letter {
+            float: left;
+            font-size: 4rem;
+            line-height: 0.85;
+            padding-top: 4px;
+            padding-right: 12px;
+            padding-bottom: 4px;
+            font-family: 'Merriweather', serif;
+            font-weight: 700;
+            color: #0284c7;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-sky-600 selection:text-white">
+
+    <!-- Thanh tiến trình đọc bài trên cùng -->
+    <div class="fixed top-0 left-0 w-full h-1.5 bg-slate-200 z-50">
+        <div id="progress-bar" class="h-full bg-gradient-to-r from-sky-500 via-blue-600 to-amber-500 w-0"></div>
+    </div>
+
+    <!-- Thanh điều hướng (Navbar) -->
+    <header class="fixed top-1.5 left-0 w-full z-40 transition-all duration-300 bg-slate-900/90 backdrop-blur-md border-b border-slate-800 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Logo / Thương hiệu cá nhân -->
+            <a href="#" class="flex items-center space-x-3 group">
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-sky-500 to-blue-700 flex items-center justify-center shadow-lg shadow-sky-500/20 group-hover:scale-105 transition-transform">
+                    <i class="fa-solid fa-microchip text-xl text-white"></i>
+                </div>
+                <div>
+                    <span class="font-bold text-lg tracking-tight block leading-none text-white">KỸ SƯ THẨM ĐỊNH <span class="text-sky-400">4.0</span></span>
+                    <span class="text-xs text-slate-400 font-medium tracking-wider uppercase mt-1 block">EVN • Construction & AI Innovation</span>
+                </div>
+            </a>
+
+            <!-- Menu Desktop -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-300">
+                <a href="#cau-chuyen" class="hover:text-sky-400 transition-colors">Câu chuyện truyền cảm hứng</a>
+                <a href="#hanh-trinh" class="hover:text-sky-400 transition-colors">Hành trình 6 năm</a>
+                <a href="#so-sanh" class="hover:text-sky-400 transition-colors">Trước & Sau AI</a>
+                <a href="#sang-kien" class="hover:text-sky-400 transition-colors">Sáng kiến & Lan tỏa</a>
+                <button onclick="openGithubModal()" class="text-amber-400 hover:text-amber-300 flex items-center gap-1.5 font-semibold">
+                    <i class="fa-brands fa-github text-base"></i> Mã nguồn Github
+                </button>
+            </nav>
+
+            <!-- Nút Gọi / Liên hệ nhanh -->
+            <div class="flex items-center space-x-3">
+                <a href="tel:0963434868" class="inline-flex items-center space-x-2 bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 text-white text-sm font-semibold px-4 py-2.5 rounded-xl shadow-lg shadow-sky-500/25 transition-all transform hover:-translate-y-0.5">
+                    <i class="fa-solid fa-phone-volume animate-pulse"></i>
+                    <span>0963.434868</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="relative pt-32 pb-20 lg:pt-40 lg:pb-28 bg-slate-900 text-white overflow-hidden tech-grid-bg">
+        <!-- Hiệu ứng ánh sáng nền -->
+        <div class="absolute top-1/4 left-10 w-96 h-96 bg-sky-500/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-10 right-10 w-96 h-96 bg-amber-500/15 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+                
+                <!-- Cột Nội dung Hero (7 cột) -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="inline-flex items-center space-x-2 bg-sky-500/10 border border-sky-400/30 text-sky-300 px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold tracking-wide uppercase">
+                        <span class="w-2 h-2 rounded-full bg-sky-400 animate-ping"></span>
+                        <span>Câu Chuyện Truyền Cảm Hứng Chuyển Đổi Số Thực Chiến</span>
+                    </div>
+
+                    <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
+                        Từ Đôi Mắt Mỏi Mệt Bên <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-500">Núi Hồ Sơ Giấy</span> Đến Người Thắp Lửa <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-blue-400">Trí Tuệ Nhân Tạo</span>
+                    </h1>
+
+                    <p class="text-lg sm:text-xl text-slate-300 leading-relaxed font-normal max-w-2xl">
+                        Hành trình 6 năm lột xác ngoạn mục: Từ một kỹ sư thẩm định dự án đầu tư xây dựng kiểm tra từng con số, bản vẽ bằng mắt thường, vươn lên làm chủ AI, kiến tạo sáng kiến đột phá chất lượng hồ sơ và truyền cảm hứng cho hàng trăm đồng nghiệp.
+                    </p>
+
+                    <!-- Con số thống kê nhanh -->
+                    <div class="grid grid-cols-3 gap-4 pt-4 border-t border-slate-800 max-w-xl">
+                        <div>
+                            <div class="text-2xl sm:text-3xl font-extrabold text-amber-400">6+ Năm</div>
+                            <div class="text-xs sm:text-sm text-slate-400 mt-0.5">Kinh nghiệm Thẩm định Dự án ĐTXD</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl sm:text-3xl font-extrabold text-sky-400">10x</div>
+                            <div class="text-xs sm:text-sm text-slate-400 mt-0.5">Tốc độ & Độ chính xác rà soát hồ sơ</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl sm:text-3xl font-extrabold text-emerald-400">100%</div>
+                            <div class="text-xs sm:text-sm text-slate-400 mt-0.5">Tinh thần sẻ chia & Lan tỏa AI</div>
+                        </div>
+                    </div>
+
+                    <!-- Các nút hành động -->
+                    <div class="flex flex-wrap items-center gap-4 pt-4">
+                        <a href="#cau-chuyen" class="inline-flex items-center space-x-2 bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold px-7 py-4 rounded-2xl shadow-xl shadow-sky-500/20 transition-all transform hover:-translate-y-0.5">
+                            <i class="fa-solid fa-book-open"></i>
+                            <span>Đọc trọn vẹn câu chuyện</span>
+                        </a>
+                        <a href="#lien-he" class="inline-flex items-center space-x-2 bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 font-semibold px-6 py-4 rounded-2xl transition-all">
+                            <i class="fa-solid fa-handshake text-amber-400"></i>
+                            <span>Kết nối & Giao lưu AI: 0963.434868</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Cột Hình ảnh Đại diện Tác giả (5 cột) -->
+                <div class="lg:col-span-5 flex flex-col items-center">
+                    <div class="relative w-72 sm:w-80 md:w-96 group">
+                        <!-- Khung phát sáng phía sau -->
+                        <div class="absolute -inset-2 bg-gradient-to-tr from-sky-500 via-blue-600 to-amber-500 rounded-3xl blur-lg opacity-60 group-hover:opacity-90 transition duration-500"></div>
+                        
+                        <!-- Card chứa ảnh chân dung đính kèm -->
+                        <div class="relative bg-slate-800 p-3 rounded-3xl border border-slate-700 shadow-2xl">
+                            <div class="relative aspect-[3/4] w-full rounded-2xl overflow-hidden bg-white">
+                                
+                                <!-- Khung hiển thị Chân dung Kỹ sư EVN (Hỗ trợ nhấp trực tiếp để nạp ảnh thật từ máy) -->
+                                <div id="svg-portrait-placeholder" onclick="document.getElementById('upload-avatar').click()" class="cursor-pointer w-full h-full flex flex-col items-center justify-between bg-gradient-to-b from-slate-50 via-white to-slate-100 relative group/avatar" title="Nhấp vào đây để chọn ảnh Anh the 2022 1_2.jpg từ máy của anh">
+                                    <!-- Nhãn hướng dẫn nổi bật trên đỉnh ảnh -->
+                                    <div class="w-full bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold py-2.5 px-3 text-center shadow-md z-20 flex items-center justify-center gap-1.5 transition-colors">
+                                        <i class="fa-solid fa-cloud-arrow-up animate-bounce"></i>
+                                        <span>BẤM VÀO ĐÂY CHỌN ẢNH CỦA ANH</span>
+                                    </div>
+
+                                    <!-- Đồ họa Vector tái hiện đúng chân dung ảnh thẻ của anh (Tóc đen rẽ ngôi, kính gọng sáng, sơ mi trắng, cà vạt vàng EVN) -->
+                                    <svg viewBox="0 0 300 380" class="w-full h-full object-cover">
+                                        <defs>
+                                            <pattern id="tie-pattern" width="6" height="6" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+                                                <rect width="6" height="6" fill="#d4be74"/>
+                                                <rect width="3" height="3" fill="#9c8236"/>
+                                            </pattern>
+                                        </defs>
+                                        <!-- Cổ và khuôn mặt -->
+                                        <path d="M122 195 L122 250 L178 250 L178 195 Z" fill="#f3d2b8"/>
+                                        <ellipse cx="150" cy="135" rx="54" ry="66" fill="#f7dac3"/>
+                                        <!-- Đôi tai -->
+                                        <ellipse cx="95" cy="140" rx="8" ry="18" fill="#f3d2b8"/>
+                                        <ellipse cx="205" cy="140" rx="8" ry="18" fill="#f3d2b8"/>
+                                        <!-- Mái tóc đen rẽ ngôi 7/3 chuẩn ảnh thẻ của anh -->
+                                        <path d="M95 128 C90 80, 120 55, 165 58 C185 60, 208 75, 205 128 C202 100, 192 85, 178 82 C150 92, 118 90, 102 108 Z" fill="#1e2022"/>
+                                        <!-- Lông mày -->
+                                        <path d="M114 114 Q128 109 140 114" stroke="#2c2523" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+                                        <path d="M160 114 Q172 109 186 114" stroke="#2c2523" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+                                        <!-- Đôi mắt -->
+                                        <circle cx="127" cy="127" r="5" fill="#2b1e16"/>
+                                        <circle cx="173" cy="127" r="5" fill="#2b1e16"/>
+                                        <circle cx="125.5" cy="125.5" r="1.5" fill="#ffffff"/>
+                                        <circle cx="171.5" cy="125.5" r="1.5" fill="#ffffff"/>
+                                        <!-- Kính cận gọng mảnh sáng màu -->
+                                        <rect x="107" y="116" width="38" height="23" rx="6" fill="rgba(255,255,255,0.15)" stroke="#c5a070" stroke-width="2.2"/>
+                                        <rect x="155" y="116" width="38" height="23" rx="6" fill="rgba(255,255,255,0.15)" stroke="#c5a070" stroke-width="2.2"/>
+                                        <path d="M145 125 Q150 122 155 125" stroke="#c5a070" stroke-width="2.2" fill="none"/>
+                                        <line x1="96" y1="125" x2="107" y2="124" stroke="#c5a070" stroke-width="2"/>
+                                        <line x1="193" y1="124" x2="204" y2="125" stroke="#c5a070" stroke-width="2"/>
+                                        <!-- Mũi và Miệng -->
+                                        <path d="M146 152 Q150 156 154 152" stroke="#d4a383" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                                        <path d="M135 172 Q150 179 165 172" stroke="#cc8878" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+                                        <!-- Áo sơ mi trắng công sở -->
+                                        <path d="M35 380 L55 255 C65 240, 105 232, 122 230 L150 265 L178 230 C195 232, 235 240, 245 255 L265 380 Z" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+                                        <!-- Cổ áo sơ mi trắng -->
+                                        <polygon points="120,222 102,262 142,252 150,245" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+                                        <polygon points="180,222 198,262 158,252 150,245" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+                                        <!-- Cà vạt vàng họa tiết caro chuẩn ảnh gốc -->
+                                        <polygon points="138,244 162,244 157,266 143,266" fill="url(#tie-pattern)" stroke="#8c7328" stroke-width="1"/>
+                                        <polygon points="143,266 157,266 168,380 132,380" fill="url(#tie-pattern)" stroke="#8c7328" stroke-width="1"/>
+                                        <!-- Biểu tượng Logo EVN trên cà vạt -->
+                                        <circle cx="150" cy="302" r="9" fill="none" stroke="#b91c1c" stroke-width="1.5"/>
+                                        <polygon points="150,290 152.5,299 160,302 152.5,305 150,314 147.5,305 140,302 147.5,299" fill="#dc2626"/>
+                                        <text x="150" y="328" font-family="Inter, sans-serif" font-size="12" font-weight="900" fill="#1e3a8a" text-anchor="middle" letter-spacing="0.5">EVN</text>
+                                    </svg>
+                                </div>
+
+                                <!-- Thẻ ảnh thật của anh (Tự động hiển thị khi đặt cùng thư mục Github hoặc khi anh chọn ảnh từ máy) -->
+                                <img id="author-portrait" 
+                                     src="Anh the 2022 1_2.jpg" 
+                                     alt="Chân dung Kỹ sư Thẩm định Dự án & Tiên phong ứng dụng AI" 
+                                     class="hidden w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                                     onload="this.classList.remove('hidden'); document.getElementById('svg-portrait-placeholder').classList.add('hidden');"
+                                     onerror="if(this.src.includes('Anh%20the%202022%201_2.jpg') || this.src.includes('Anh the 2022 1_2.jpg')){ this.src='Anh the 2022 1.jpg'; } else { this.classList.add('hidden'); document.getElementById('svg-portrait-placeholder').classList.remove('hidden'); }">
+                                
+                                <!-- Lớp phủ thông tin dưới chân ảnh -->
+                                <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950 via-slate-900/90 to-transparent p-5 pt-16 pointer-events-none">
+                                    <div class="flex items-center space-x-2 mb-1">
+                                        <span class="px-2.5 py-0.5 rounded-md bg-amber-500/20 border border-amber-400/40 text-amber-300 text-xs font-semibold">
+                                            Kỹ sư Thẩm định • EVN
+                                        </span>
+                                        <span class="px-2.5 py-0.5 rounded-md bg-sky-500/20 border border-sky-400/40 text-sky-300 text-xs font-semibold">
+                                            AI Innovator
+                                        </span>
+                                    </div>
+                                    <h3 class="text-lg font-bold text-white">Người Kiến Tạo & Lan Tỏa AI</h3>
+                                    <p class="text-xs text-slate-300 mt-0.5 flex items-center gap-1.5">
+                                        <i class="fa-solid fa-phone text-sky-400"></i> Liên hệ trực tiếp: <strong class="text-amber-400">0963.434868</strong>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Nút hỗ trợ chọn đúng ảnh thẻ từ máy tính để hiển thị ngay lập tức -->
+                            <div class="mt-3 flex flex-col gap-2 p-2.5 bg-slate-900/95 rounded-xl border border-amber-400/40 text-xs">
+                                <label for="upload-avatar" class="cursor-pointer w-full bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 px-3 py-2.5 rounded-lg font-extrabold transition-all flex items-center justify-center gap-2 shadow-md">
+                                    <i class="fa-solid fa-image text-sm"></i>
+                                    <span>NẠP ẢNH "Anh the 2022 1_2.jpg" TỪ MÁY</span>
+                                </label>
+                                <input type="file" id="upload-avatar" accept="image/*" class="hidden" onchange="handleAvatarUpload(event)">
+                                <p id="photo-helper" class="text-[11px] text-slate-300 text-center leading-snug">
+                                    Nhấn nút màu vàng ở trên và chọn tấm ảnh thẻ của anh để ảnh hiện ngay trên trang và tự động lưu vào mã nguồn Github!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- PHẦN TRÍCH DẪN TÂM ĐẮC (QUOTE BANNER) -->
+    <section class="py-12 bg-gradient-to-r from-sky-900 via-slate-900 to-blue-950 border-y border-slate-800 text-white">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <i class="fa-solid fa-quote-left text-3xl text-amber-400/60 mb-4"></i>
+            <blockquote class="font-serif italic text-xl sm:text-2xl lg:text-3xl leading-relaxed text-slate-100">
+                "Trí tuệ nhân tạo không sinh ra để thay thế người kỹ sư thẩm định. Nhưng người kỹ sư biết ứng dụng AI chắc chắn sẽ giải phóng chính mình khỏi những đêm trắng bên chồng hồ sơ giấy, để vươn tới những giá trị sáng tạo cao hơn."
+            </blockquote>
+            <div class="mt-4 text-sm font-semibold tracking-widest uppercase text-sky-400">
+                — Tâm niệm từ hành trình 6 năm chuyển mình cùng công nghệ —
+            </div>
+        </div>
+    </section>
+
+    <!-- CÂU CHUYỆN TRUYỀN CẢM HỨNG CHÍNH (LONG-FORM STORYTELLING) -->
+    <section id="cau-chuyen" class="py-20 lg:py-28 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Tiêu đề bài viết -->
+            <div class="text-center mb-16">
+                <span class="text-sky-600 font-bold tracking-widest uppercase text-xs sm:text-sm bg-sky-50 px-4 py-1.5 rounded-full border border-sky-200">
+                    Tự Truyện Nghề Nghiệp & Đổi Mới Sáng Tạo
+                </span>
+                <h2 class="mt-4 text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 leading-tight">
+                    Cuộc Cách Mạng Thầm Lặng Từ Bàn Làm Việc Của Một Kỹ Sư Thẩm Định
+                </h2>
+                <p class="mt-4 text-slate-500 text-base sm:text-lg">
+                    Câu chuyện có thật về hành trình vượt qua giới hạn của thói quen thủ công suốt nửa thập kỷ để làm chủ kỷ nguyên Trí tuệ nhân tạo (AI).
+                </p>
+            </div>
+
+            <!-- Nội dung câu chuyện được trình bày như tạp chí cao cấp -->
+            <article class="space-y-16 font-serif text-lg sm:text-xl leading-relaxed text-slate-700">
+
+                <!-- CHƯƠNG 1 -->
+                <div class="space-y-6">
+                    <div class="flex items-center space-x-3 font-sans">
+                        <span class="px-3.5 py-1 bg-slate-900 text-amber-400 font-bold text-sm rounded-lg">CHƯƠNG I</span>
+                        <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900">6 Năm Trước: Những Đêm Trắng, Kính Cận Và Núi Hồ Sơ Cao Quá Đầu Người</h3>
+                    </div>
+
+                    <p class="drop-cap">
+                        Ngược dòng thời gian trở về 6 năm trước, nếu bạn bước vào phòng làm việc của tôi vào lúc 8 giờ tối, hình ảnh quen thuộc nhất sẽ là một người kỹ sư trong chiếc áo sơ mi trắng, đeo chiếc cà vạt mang biểu tượng ngành Điện (EVN), đôi mắt căng thẳng sau cặp kính cận đang chăm chú dò từng dòng chữ, từng con số trên những tập hồ sơ dự án đầu tư xây dựng dày cộp.
+                    </p>
+
+                    <p>
+                        Nghề <strong>thẩm định dự án đầu tư xây dựng</strong> là một nghề đặc thù — nơi không có chỗ cho sự đại khái. Mỗi một dự án là hàng chục quyển thuyết minh báo cáo nghiên cứu khả thi, thiết kế cơ sở, thiết kế bản vẽ thi công, hàng ngàn đầu mục dự toán, định mức, đơn giá, cùng một "rừng" các văn bản pháp lý: từ Luật Xây dựng, Luật Đấu thầu, các Nghị định của Chính phủ cho đến hàng loạt Thông tư, Quy chuẩn kỹ thuật quốc gia luôn được cập nhật, sửa đổi.
+                    </p>
+
+                    <!-- Hình ảnh minh họa Chương 1 -->
+                    <figure class="my-8 rounded-3xl overflow-hidden shadow-xl border border-slate-200 bg-slate-50 font-sans">
+                        <div class="grid grid-cols-1 md:grid-cols-2">
+                            <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=900&q=80" 
+                                 alt="Kiểm tra hồ sơ dự án thủ công" 
+                                 class="w-full h-64 md:h-full object-cover">
+                            <div class="p-6 sm:p-8 flex flex-col justify-center bg-slate-900 text-white">
+                                <span class="text-amber-400 text-xs font-bold uppercase tracking-wider mb-2">Ký ức nghề thẩm định</span>
+                                <h4 class="text-xl font-bold mb-3">"Cây thước kẻ, bút dạ quang và đôi mắt rực đỏ"</h4>
+                                <p class="text-slate-300 text-sm leading-relaxed">
+                                    Suốt nhiều năm ròng rã, công cụ duy nhất để đối chiếu sự sai lệch giữa thuyết minh, bản vẽ và bảng tiên lượng dự toán chính là trí nhớ và đôi mắt trần của người kỹ sư. Áp lực tiến độ cộng với nỗi sợ bỏ sót một sai số nhỏ luôn đè nặng lên đôi vai.
+                                </p>
+                            </div>
+                        </div>
+                    </figure>
+
+                    <p>
+                        Tôi vẫn nhớ như in cảm giác mỏi nhừ nơi sống mũi khi phải tháo cặp kính xuống xoa dịu đôi mắt sau hàng giờ liền rà soát chéo. Làm sao để phát hiện ra một điều khoản pháp lý trong tờ trình đã hết hiệu lực? Làm sao để chắc chắn rằng khối lượng bê tông hay chiều dài tuyến cáp trong thuyết minh khớp tuyệt đối với bảng tổng hợp dự toán hàng nghìn dòng? Tất cả đều phải <strong>kiểm tra thủ công bằng mắt</strong>. Có những ngày, dù đã dốc toàn bộ tâm sức, tôi vẫn tự hỏi lòng mình: <em>"Liệu con người có mãi phải gồng mình chạy đua với khối lượng dữ liệu khổng lồ này bằng sức lực cơ học hay không?"</em>
+                    </p>
+                </div>
+
+                <!-- CHƯƠNG 2 -->
+                <div class="space-y-6">
+                    <div class="flex items-center space-x-3 font-sans">
+                        <span class="px-3.5 py-1 bg-sky-600 text-white font-bold text-sm rounded-lg">CHƯƠNG II</span>
+                        <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Bước Ngoặt Nhận Thức: Khi Người Kỹ Sư Quyết Định Học Lại Từ Đầu Cùng AI</h3>
+                    </div>
+
+                    <p>
+                        Rồi làn sóng Trí tuệ nhân tạo (AI) xuất hiện. Ban đầu, giống như rất nhiều đồng nghiệp xung quanh, tôi nhìn AI với một chút hoài nghi. Người ta nói AI biết làm thơ, viết văn, vẽ tranh... nhưng <strong>thẩm định dự án đầu tư xây dựng</strong> là câu chuyện của tiêu chuẩn kỹ thuật khắt khe, của quy định pháp luật chính xác tuyệt đối. Liệu AI có hiểu nổi một hồ sơ thiết kế hay một bảng tổng mức đầu tư?
+                    </p>
+
+                    <p>
+                        Thay vì đứng ngoài phán xét, tôi chọn cách <strong>dấn thân tìm hiểu</strong>. Sau những giờ làm việc căng thẳng ở cơ quan, tôi lại bắt đầu một "ca học tập" thứ hai vào mỗi tối. Tôi mày mò học cách giao tiếp với AI (Prompt Engineering), tìm hiểu cách cấu trúc dữ liệu, cách đưa các văn bản quy phạm pháp luật, tiêu chuẩn ngành vào để AI phân tích mà không bị "ảo giác" (hallucination).
+                    </p>
+
+                    <div class="bg-sky-50 border-l-4 border-sky-600 p-6 sm:p-8 rounded-r-2xl font-sans my-6">
+                        <h4 class="font-bold text-sky-950 text-lg mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-lightbulb text-amber-500"></i> Khoảnh khắc "Eureka!" làm thay đổi tất cả
+                        </h4>
+                        <p class="text-slate-700 text-base leading-relaxed">
+                            Đó là buổi tối khi tôi thử nghiệm xây dựng một quy trình câu lệnh chuyên sâu để AI đối chiếu đồng thời <strong>Thuyết minh dự án</strong> với <strong>Hệ thống Nghị định, Thông tư hiện hành</strong> và kiểm tra sự nhất quán số liệu. Chỉ trong vòng chưa đầy <strong>3 phút</strong>, AI đã chỉ ra chính xác 4 điểm bất cập về căn cứ pháp lý hết hiệu lực và 2 lỗi lệch số liệu giữa các chương — công việc mà trước đây tôi phải đọc ròng rã suốt một buổi chiều!
+                        </p>
+                    </div>
+
+                    <p>
+                        Khoảnh khắc ấy, tôi nhận ra một chân lý: <strong>AI không thay thế chuyên môn của người kỹ sư, mà AI chính là chiếc kính hiển vi siêu việt phóng đại năng lực của người kỹ sư lên gấp bội.</strong> Kinh nghiệm 6 năm nhìn hồ sơ bằng mắt chính là nền tảng quý giá nhất giúp tôi biết phải "dạy" AI kiểm tra cái gì, xoáy sâu vào lỗ hổng nào.
+                    </p>
+                </div>
+
+                <!-- CHƯƠNG 3 -->
+                <div class="space-y-6">
+                    <div class="flex items-center space-x-3 font-sans">
+                        <span class="px-3.5 py-1 bg-amber-500 text-slate-950 font-bold text-sm rounded-lg">CHƯƠNG III</span>
+                        <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Đơm Hoa Kết Trái: Sáng Kiến Đột Phá Chất Lượng Thẩm Định Hồ Sơ</h3>
+                    </div>
+
+                    <p>
+                        Không dừng lại ở những mẹo vặt cá nhân, tôi bắt đầu hệ thống hóa toàn bộ những gì mình đúc kết được thành quy trình chuẩn. Từ việc ứng dụng AI để tóm tắt hồ sơ dự án hàng trăm trang, tự động rà soát danh mục văn bản pháp lý, kiểm tra chéo khối lượng – thiết bị, cho đến việc soạn thảo báo cáo kết quả thẩm định một cách sắc bén, chặt chẽ và chuẩn mực.
+                    </p>
+
+                    <p>
+                        Những đêm trăn trở ấy đã kết tinh thành <strong>Sáng kiến ứng dụng AI vào công tác chuyên môn kiểm tra, kiểm soát và nâng cao chất lượng hồ sơ tài liệu dự án đầu tư xây dựng</strong>. Sáng kiến ra đời không chỉ giải quyết bài toán tốc độ, mà quan trọng hơn cả là <strong>nâng tầm chất lượng thẩm định</strong>: giảm thiểu tối đa sai sót chủ quan do mệt mỏi, chuẩn hóa quy trình rà soát và tạo ra một "lưới lọc thông minh" bảo vệ tính chính xác, minh bạch và hiệu quả cho mỗi công trình dự án.
+                    </p>
+
+                    <!-- Hình ảnh minh họa Chương 3 -->
+                    <figure class="my-8 rounded-3xl overflow-hidden shadow-xl border border-slate-200 font-sans">
+                        <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=1200&q=80" 
+                             alt="Ứng dụng công nghệ và AI vào kỹ thuật xây dựng" 
+                             class="w-full h-72 sm:h-96 object-cover">
+                        <figcaption class="p-4 bg-slate-100 text-slate-600 text-sm text-center font-medium">
+                            Sự kết hợp hoàn hảo giữa bản lĩnh chuyên môn kỹ thuật xây dựng và sức mạnh phân tích của Trí tuệ nhân tạo (AI).
+                        </figcaption>
+                    </figure>
+                </div>
+
+                <!-- CHƯƠNG 4 -->
+                <div class="space-y-6">
+                    <div class="flex items-center space-x-3 font-sans">
+                        <span class="px-3.5 py-1 bg-emerald-600 text-white font-bold text-sm rounded-lg">CHƯƠNG IV</span>
+                        <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Từ Người Thực Hành Đến Người Truyền Lửa: Hạnh Phúc Khi Cho Đi</h3>
+                    </div>
+
+                    <p>
+                        Nếu giữ bí quyết ấy cho riêng mình, có lẽ tôi sẽ là một cá nhân làm việc rất nhàn nhã. Nhưng mỗi khi nhìn sang bàn làm việc bên cạnh, thấy những người anh, người chị, những bạn đồng nghiệp trẻ vẫn đang đỏ mắt bên những chồng hồ sơ giống hệt mình của 6 năm về trước, lòng tôi lại thôi thúc một điều lớn lao hơn: <strong>Mình phải chia sẻ!</strong>
+                    </p>
+
+                    <p>
+                        Tôi bắt đầu từ những buổi hướng dẫn nhỏ ngay tại văn phòng, kiên nhẫn cầm tay chỉ việc cho từng đồng nghiệp — kể cả những người vốn tự nhận mình "ngại công nghệ". Tôi chia sẻ các bộ câu lệnh mẫu (Prompt), hướng dẫn cách bảo mật dữ liệu khi dùng AI, cách biến AI thành trợ lý ảo kiểm tra văn bản, lập bảng biểu, phân tích số liệu và cân bằng cuộc sống.
+                    </p>
+
+                    <p>
+                        Niềm hạnh phúc lớn nhất của tôi không chỉ là khi sáng kiến được công nhận, mà là khoảnh khắc nhìn thấy ánh mắt rạng rỡ của đồng nghiệp khi họ thốt lên: <em>"Tuyệt vời quá! Việc này bình thường anh làm mất cả ngày, giờ nhờ em hướng dẫn dùng AI mà chỉ 15 phút đã xong và cực kỳ chuẩn xác!"</em>. Từ một kỹ sư thẩm định lặng lẽ, tôi đã tìm thấy sứ mệnh mới của mình: <strong>Người hướng dẫn, người truyền cảm hứng và lan tỏa AI thực chiến đến cộng đồng.</strong>
+                    </p>
+                </div>
+
+            </article>
+        </div>
+    </section>
+
+    <!-- CỘT MỐC HÀNH TRÌNH 6 NĂM (INTERACTIVE TIMELINE) -->
+    <section id="hanh-trinh" class="py-20 bg-slate-900 text-white tech-grid-bg relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-amber-400 font-semibold uppercase tracking-widest text-xs sm:text-sm">Dấu Ấn Chuyển Mình</span>
+                <h2 class="mt-2 text-3xl sm:text-4xl font-extrabold">4 Cột Mốc Vàng Trong Hành Trình Làm Chủ AI</h2>
+                <p class="mt-4 text-slate-400">Mỗi giai đoạn là một bước tiến vượt bậc về tư duy, phương pháp làm việc và giá trị đóng góp cho tập thể.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Cột mốc 1 -->
+                <div class="dark-glass-card rounded-3xl p-7 relative group hover:-translate-y-2 transition-all duration-300">
+                    <div class="w-12 h-12 rounded-2xl bg-slate-800 border border-slate-600 flex items-center justify-center text-amber-400 text-xl font-bold mb-5 group-hover:bg-amber-400 group-hover:text-slate-950 transition-colors">
+                        01
+                    </div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-slate-400">6 Năm Trước</span>
+                    <h3 class="text-xl font-bold mt-1 mb-3 text-white">Thẩm Định Thủ Công Bằng Mắt</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        Kiểm tra hàng nghìn trang thuyết minh, bản vẽ, dự toán hoàn toàn bằng mắt thường. Tích lũy nền tảng chuyên môn sâu sắc nhưng tốn nhiều thời gian và sức lực.
+                    </p>
+                </div>
+
+                <!-- Cột mốc 2 -->
+                <div class="dark-glass-card rounded-3xl p-7 relative group hover:-translate-y-2 transition-all duration-300">
+                    <div class="w-12 h-12 rounded-2xl bg-slate-800 border border-sky-500/40 flex items-center justify-center text-sky-400 text-xl font-bold mb-5 group-hover:bg-sky-400 group-hover:text-slate-950 transition-colors">
+                        02
+                    </div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-sky-400">Giai Đoạn Khai Phá</span>
+                    <h3 class="text-xl font-bold mt-1 mb-3 text-white">Tự Học & Thử Nghiệm AI</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        Vượt qua rào cản tâm lý, miệt mài nghiên cứu các mô hình ngôn ngữ lớn (LLM), kỹ thuật đặt câu lệnh (Prompt) chuyên biệt cho ngành đầu tư xây dựng và pháp lý.
+                    </p>
+                </div>
+
+                <!-- Cột mốc 3 -->
+                <div class="dark-glass-card rounded-3xl p-7 relative group hover:-translate-y-2 transition-all duration-300">
+                    <div class="w-12 h-12 rounded-2xl bg-slate-800 border border-emerald-500/40 flex items-center justify-center text-emerald-400 text-xl font-bold mb-5 group-hover:bg-emerald-400 group-hover:text-slate-950 transition-colors">
+                        03
+                    </div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">Bước Đột Phá</span>
+                    <h3 class="text-xl font-bold mt-1 mb-3 text-white">Tạo Ra Sáng Kiến Chuyên Môn</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        Đúc kết thành Sáng kiến ứng dụng AI kiểm tra, kiểm soát nâng cao chất lượng hồ sơ tài liệu dự án. Chuẩn hóa quy trình, tăng tốc độ và độ chính xác vượt trội.
+                    </p>
+                </div>
+
+                <!-- Cột mốc 4 -->
+                <div class="dark-glass-card rounded-3xl p-7 relative group hover:-translate-y-2 transition-all duration-300 border-amber-400/50">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-400 text-slate-950 flex items-center justify-center text-xl font-bold mb-5 shadow-lg shadow-amber-400/20">
+                        04
+                    </div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-amber-400">Hiện Tại & Tương Lai</span>
+                    <h3 class="text-xl font-bold mt-1 mb-3 text-white">Người Hướng Dẫn & Lan Tỏa AI</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        Trở thành người truyền lửa, trực tiếp hướng dẫn đồng nghiệp và cộng đồng ứng dụng AI hiệu quả vào công việc chuyên môn và nâng tầm chất lượng cuộc sống.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SO SÁNH TRƯỚC VÀ SAU KHI ỨNG DỤNG AI -->
+    <section id="so-sanh" class="py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-sky-600 font-bold uppercase tracking-widest text-xs sm:text-sm">Sự Khác Biệt Rõ Rệt</span>
+                <h2 class="mt-2 text-3xl sm:text-4xl font-extrabold text-slate-900">Thẩm Định Dự Án: Trước & Sau Khi Có AI Đồng Hành</h2>
+                <p class="mt-4 text-slate-600">Sự thay đổi không nằm ở việc làm ít đi, mà là làm thông minh hơn, sâu sắc hơn và kiểm soát rủi ro tốt hơn.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+                <!-- Cột Trước đây (Thủ công) -->
+                <div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="inline-flex items-center space-x-2 bg-rose-50 text-rose-700 px-4 py-1.5 rounded-full text-sm font-bold mb-6 border border-rose-200">
+                            <i class="fa-solid fa-eye-slash"></i>
+                            <span>Phương Pháp Thủ Công (6 Năm Trước)</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-slate-800 mb-6">Kiểm Tra Bằng Mắt & Sức Người</h3>
+                        
+                        <ul class="space-y-4 text-slate-600">
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-circle-xmark text-rose-500 mt-1.5"></i>
+                                <span><strong>Tra cứu pháp lý thủ công:</strong> Mất hàng giờ lật tìm từng Nghị định, Thông tư, dễ sót các điều khoản chuyển tiếp hoặc văn bản mới thay thế.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-circle-xmark text-rose-500 mt-1.5"></i>
+                                <span><strong>Rà soát số liệu mỏi mắt:</strong> Dò từng dòng giữa thuyết minh và dự toán bằng mắt thường, dễ xảy ra sai sót khi căng thẳng, mệt mỏi.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-circle-xmark text-rose-500 mt-1.5"></i>
+                                <span><strong>Soạn thảo báo cáo tốn thời gian:</strong> Phải gõ lại từng nhận xét, tổng hợp thủ công từ nhiều nguồn tài liệu rời rạc.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-circle-xmark text-rose-500 mt-1.5"></i>
+                                <span><strong>Áp lực tâm lý nặng nề:</strong> Thường xuyên làm thêm giờ, ít thời gian nghiên cứu chuyên sâu và chăm sóc gia đình.</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="mt-8 pt-6 border-t border-slate-100 flex items-center justify-between text-sm text-slate-500">
+                        <span>Hiệu suất trung bình: <strong class="text-slate-700">1x (Giới hạn sinh học)</strong></span>
+                        <span class="text-rose-600 font-semibold">Độ mỏi mắt cao</span>
+                    </div>
+                </div>
+
+                <!-- Cột Hiện nay (Ứng dụng AI) -->
+                <div class="bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 text-white rounded-3xl p-8 border-2 border-sky-500/50 shadow-2xl relative flex flex-col justify-between">
+                    <div class="absolute top-4 right-4 bg-amber-400 text-slate-950 text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">
+                        Sáng Kiến Đột Phá
+                    </div>
+                    <div>
+                        <div class="inline-flex items-center space-x-2 bg-sky-500/20 text-sky-300 px-4 py-1.5 rounded-full text-sm font-bold mb-6 border border-sky-400/30">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            <span>Phương Pháp Thẩm Định Thông Minh Cùng AI</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-6">Kiểm Soát Đa Tầng & Tự Động Hóa Nhận Thức</h3>
+                        
+                        <ul class="space-y-4 text-slate-200">
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-circle-check text-emerald-400 mt-1.5"></i>
+                                <span><strong>Đối chiếu pháp lý tức thời:</strong> AI quét và kiểm tra tính hiệu lực của toàn bộ căn cứ pháp lý dự án chỉ trong vài chục giây.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-circle-check text-emerald-400 mt-1.5"></i>
+                                <span><strong>Phát hiện mâu thuẫn tự động:</strong> Nhanh chóng chỉ ra các điểm vênh về quy mô, thông số kỹ thuật, khối lượng giữa các phần hồ sơ.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-circle-check text-emerald-400 mt-1.5"></i>
+                                <span><strong>Nâng tầm chất lượng văn bản:</strong> Hỗ trợ cấu trúc báo cáo thẩm định chặt chẽ, văn phong chuẩn mực, rõ ràng và thuyết phục.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-circle-check text-emerald-400 mt-1.5"></i>
+                                <span><strong>Giải phóng thời gian sáng tạo:</strong> Người kỹ sư tập trung vào tư duy phản biện, tối ưu giải pháp kỹ thuật – kinh tế và truyền lửa cho đồng nghiệp.</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="mt-8 pt-6 border-t border-slate-800 flex items-center justify-between text-sm">
+                        <span class="text-slate-300">Hiệu suất & Chất lượng: <strong class="text-amber-400">Tăng gấp 5 - 10 lần</strong></span>
+                        <span class="text-emerald-400 font-semibold flex items-center gap-1"><i class="fa-solid fa-bolt"></i> Chính xác & Bền vững</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GIÁ TRỊ LAN TỎA & CÁC LĨNH VỰC HƯỚNG DẪN CHIA SẺ -->
+    <section id="sang-kien" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-16">
+                <div class="lg:col-span-7">
+                    <span class="text-sky-600 font-bold uppercase tracking-widest text-xs sm:text-sm">Cùng Nhau Tiến Bộ</span>
+                    <h2 class="mt-2 text-3xl sm:text-4xl font-extrabold text-slate-900 leading-tight">
+                        Lan Tỏa Tinh Thần Học Tập & Ứng Dụng AI Vào Công Việc Và Cuộc Sống
+                    </h2>
+                    <p class="mt-4 text-slate-600 text-lg leading-relaxed">
+                        Tôi luôn tin rằng: <em>"Một ngọn nến thắp sáng một ngọn nến khác sẽ không làm giảm đi ánh sáng của chính nó, mà làm cả căn phòng rực rỡ hơn"</em>. Những giá trị tôi đang hàng ngày chia sẻ cùng đồng nghiệp và bạn bè:
+                    </p>
+                </div>
+                <div class="lg:col-span-5 flex justify-start lg:justify-end">
+                    <div class="bg-amber-50 border border-amber-200 rounded-2xl p-5 flex items-center space-x-4 max-w-md">
+                        <div class="w-14 h-14 rounded-2xl bg-amber-500 text-white flex items-center justify-center text-2xl shrink-0 shadow-md">
+                            <i class="fa-solid fa-users-rays"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-900">Sẵn sàng kết nối & Sẻ chia</h4>
+                            <p class="text-xs text-slate-600 mt-0.5">Giao lưu kinh nghiệm ứng dụng AI thực chiến cho kỹ sư, dân văn phòng và quản lý dự án.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3 Card giá trị cốt lõi -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="bg-slate-50 rounded-3xl overflow-hidden border border-slate-200 hover:shadow-xl transition-all group">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=800&q=80" 
+                             alt="AI trong thẩm định xây dựng" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/70 to-transparent"></div>
+                        <span class="absolute bottom-3 left-4 text-white font-bold text-sm flex items-center gap-1.5">
+                            <i class="fa-solid fa-helmet-safety text-amber-400"></i> Chuyên Môn Kỹ Thuật & Dự Án
+                        </span>
+                    </div>
+                    <div class="p-7">
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">AI Kiểm Soát Chất Lượng Hồ Sơ Dự Án</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            Xây dựng bộ quy tắc và trợ lý AI chuyên trách kiểm tra sự tuân thủ quy chuẩn, tiêu chuẩn, pháp lý đầu tư xây dựng; phát hiện sai sót hồ sơ trước khi trình duyệt.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-slate-50 rounded-3xl overflow-hidden border border-slate-200 hover:shadow-xl transition-all group">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80" 
+                             alt="Hướng dẫn và đào tạo đồng nghiệp" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/70 to-transparent"></div>
+                        <span class="absolute bottom-3 left-4 text-white font-bold text-sm flex items-center gap-1.5">
+                            <i class="fa-solid fa-chalkboard-user text-sky-400"></i> Đào Tạo & Truyền Cảm Hứng
+                        </span>
+                    </div>
+                    <div class="p-7">
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">Cầm Tay Chỉ Việc Cho Người Mới Bắt Đầu</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            Đơn giản hóa các khái niệm AI phức tạp thành những bước thực hành dễ hiểu, giúp bất kỳ ai — dù không giỏi lập trình — cũng có thể làm chủ AI ngay trong ngày đầu tiên.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-slate-50 rounded-3xl overflow-hidden border border-slate-200 hover:shadow-xl transition-all group">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80" 
+                             alt="Ứng dụng AI vào cuộc sống" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/70 to-transparent"></div>
+                        <span class="absolute bottom-3 left-4 text-white font-bold text-sm flex items-center gap-1.5">
+                            <i class="fa-solid fa-heart-pulse text-emerald-400"></i> Tối Ưu Hóa Cuộc Sống
+                        </span>
+                    </div>
+                    <div class="p-7">
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">Ứng Dụng AI Vào Đời Sống Hàng Ngày</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            Sử dụng AI làm người bạn đồng hành trong học tập suốt đời, lập kế hoạch tài chính gia đình, đồng hành dạy con học tập và cân bằng thời gian nghỉ ngơi.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- KHU VỰC LIÊN HỆ & KẾT NỐI TRỰC TIẾP -->
+    <section id="lien-he" class="py-20 bg-gradient-to-b from-slate-900 to-slate-950 text-white relative overflow-hidden">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="bg-gradient-to-r from-blue-900/60 via-slate-900/90 to-sky-900/60 border border-sky-500/30 rounded-3xl p-8 sm:p-12 shadow-2xl backdrop-blur-xl">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    
+                    <div class="lg:col-span-7 space-y-4">
+                        <span class="px-3.5 py-1 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30 text-xs font-bold uppercase tracking-wider">
+                            Kết Nối Cùng Tác Giả
+                        </span>
+                        <h2 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight">
+                            Hãy Bắt Đầu Hành Trình AI Của Bạn Ngay Hôm Nay!
+                        </h2>
+                        <p class="text-slate-300 text-base sm:text-lg leading-relaxed">
+                            Nếu câu chuyện của tôi chạm đến bạn, hoặc bạn đang tìm kiếm phương pháp ứng dụng AI để giải phóng bản thân khỏi khối lượng hồ sơ khổng lồ, nâng cao chất lượng thẩm định và công việc chuyên môn — đừng ngần ngại liên hệ với tôi. Tôi luôn sẵn lòng lắng nghe và chia sẻ!
+                        </p>
+
+                        <!-- Các nút tương tác số điện thoại -->
+                        <div class="pt-4 flex flex-wrap items-center gap-4">
+                            <a href="tel:0963434868" class="inline-flex items-center space-x-3 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-extrabold px-7 py-4 rounded-2xl shadow-xl shadow-amber-500/20 transition-all transform hover:-translate-y-0.5 text-lg">
+                                <i class="fa-solid fa-phone-volume text-xl"></i>
+                                <span>Gọi ngay: 0963.434868</span>
+                            </a>
+
+                            <button onclick="copyPhoneNumber()" class="inline-flex items-center space-x-2 bg-slate-800 hover:bg-slate-700 text-sky-300 border border-sky-500/30 font-semibold px-5 py-4 rounded-2xl transition-all">
+                                <i class="fa-regular fa-copy"></i>
+                                <span id="copy-phone-text">Sao chép SĐT / Zalo</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Danh thiếp số hóa (Digital Business Card) -->
+                    <div class="lg:col-span-5">
+                        <div class="bg-slate-950/90 border border-slate-800 rounded-2xl p-6 space-y-4 shadow-inner">
+                            <div class="flex items-center space-x-4 border-b border-slate-800 pb-4">
+                                <!-- Ảnh đại diện thu nhỏ trên Danh thiếp (Không dùng ảnh người lạ) -->
+                                <div class="relative w-16 h-20 rounded-xl overflow-hidden border border-amber-400/50 shrink-0 bg-white flex items-center justify-center">
+                                    <div id="card-svg-fallback" onclick="document.getElementById('upload-avatar').click()" class="cursor-pointer w-full h-full flex flex-col items-center justify-center bg-slate-100 text-slate-800" title="Nhấp để chọn ảnh của anh">
+                                        <i class="fa-solid fa-user-tie text-2xl text-sky-700"></i>
+                                        <span class="text-[9px] font-extrabold text-amber-600 mt-0.5">EVN</span>
+                                    </div>
+                                    <img id="card-avatar" 
+                                         src="Anh the 2022 1_2.jpg" 
+                                         alt="Ảnh đại diện liên hệ" 
+                                         class="hidden w-full h-full object-cover object-top"
+                                         onload="this.classList.remove('hidden'); document.getElementById('card-svg-fallback').classList.add('hidden');"
+                                         onerror="if(this.src.includes('Anh%20the%202022%201_2.jpg') || this.src.includes('Anh the 2022 1_2.jpg')){ this.src='Anh the 2022 1.jpg'; } else { this.classList.add('hidden'); document.getElementById('card-svg-fallback').classList.remove('hidden'); }">
+                                </div>
+                                <div>
+                                    <div class="text-xs font-bold text-amber-400 uppercase tracking-wider">Kỹ Sư Thẩm Định Dự Án</div>
+                                    <div class="text-lg font-bold text-white">Chuyên Gia Sáng Kiến & Lan Tỏa AI</div>
+                                    <div class="text-xs text-slate-400 mt-0.5">Tập đoàn Điện lực Việt Nam (EVN)</div>
+                                </div>
+                            </div>
+
+                            <div class="space-y-2.5 text-sm">
+                                <div class="flex items-center justify-between text-slate-300">
+                                    <span class="text-slate-400"><i class="fa-solid fa-phone text-sky-400 mr-2"></i>Điện thoại / Zalo:</span>
+                                    <strong class="text-amber-400 text-base tracking-wide">0963.434868</strong>
+                                </div>
+                                <div class="flex items-center justify-between text-slate-300">
+                                    <span class="text-slate-400"><i class="fa-solid fa-briefcase text-sky-400 mr-2"></i>Lĩnh vực:</span>
+                                    <span class="font-medium text-white">Thẩm định ĐTXD & Ứng dụng AI</span>
+                                </div>
+                                <div class="flex items-center justify-between text-slate-300">
+                                    <span class="text-slate-400"><i class="fa-solid fa-heart text-rose-400 mr-2"></i>Sứ mệnh:</span>
+                                    <span class="font-medium text-emerald-400">Hướng dẫn & Lan tỏa AI thực chiến</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- KHU VỰC HƯỚNG DẪN & SAO CHÉP MÃ NGUỒN ĐƯA LÊN GITHUB -->
+    <section class="py-12 bg-slate-950 border-t border-slate-800/80 text-slate-400 text-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div class="flex items-center space-x-3">
+                <i class="fa-brands fa-github text-2xl text-white"></i>
+                <div>
+                    <h4 class="text-white font-semibold">Bạn muốn đưa trang Blog này lên Github Pages?</h4>
+                    <p class="text-xs text-slate-400">Toàn bộ mã nguồn chuẩn HTML5 đã sẵn sàng để bạn sao chép chỉ với 1 nút bấm.</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <button onclick="copyFullHtmlCode()" class="bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold px-5 py-2.5 rounded-xl transition-all flex items-center gap-2 shadow-lg shadow-sky-500/10">
+                    <i class="fa-solid fa-code"></i>
+                    <span>Copy Toàn Bộ Mã HTML Cho Github</span>
+                </button>
+                <button onclick="openGithubModal()" class="bg-slate-800 hover:bg-slate-700 text-white font-medium px-4 py-2.5 rounded-xl border border-slate-700 transition-all">
+                    Xem hướng dẫn Github
+                </button>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 pt-8 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500">
+            <p>© 2026 Blog Cá Nhân Truyền Cảm Hứng Ứng Dụng AI • Kỹ Sư Thẩm Định Dự Án Đầu Tư Xây Dựng.</p>
+            <p class="mt-2 sm:mt-0">Hotline kết nối & Chia sẻ AI: <strong class="text-slate-300">0963.434868</strong></p>
+        </div>
+    </section>
+
+    <!-- MODAL HƯỚNG DẪN ĐƯA LÊN GITHUB & COPY CODE -->
+    <div id="github-modal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-700 rounded-3xl max-w-2xl w-full p-6 sm:p-8 text-white shadow-2xl relative">
+            <button onclick="closeGithubModal()" class="absolute top-5 right-5 w-9 h-9 rounded-full bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-slate-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <div class="flex items-center space-x-3 mb-4">
+                <i class="fa-brands fa-github text-3xl text-amber-400"></i>
+                <div>
+                    <h3 class="text-xl font-bold">Hướng Dẫn Đưa Website Lên Github Nhanh Nhất</h3>
+                    <p class="text-xs text-slate-400">Chỉ mất 2 phút để có địa chỉ trang web cá nhân chính thức</p>
+                </div>
+            </div>
+
+            <div class="space-y-4 text-sm text-slate-300 bg-slate-950/70 p-5 rounded-2xl border border-slate-800">
+                <div class="flex items-start gap-3">
+                    <span class="w-6 h-6 rounded-full bg-sky-500 text-slate-950 font-bold flex items-center justify-center text-xs shrink-0 mt-0.5">1</span>
+                    <p><strong>Tạo Repository mới trên Github:</strong> Đăng nhập Github, bấm nút <strong>New Repository</strong>, đặt tên (ví dụ: <code class="text-amber-300">blog-ai-ca-nhan</code>), chọn chế độ <strong>Public</strong> rồi nhấn <strong>Create repository</strong>.</p>
+                </div>
+                <div class="flex items-start gap-3">
+                    <span class="w-6 h-6 rounded-full bg-sky-500 text-slate-950 font-bold flex items-center justify-center text-xs shrink-0 mt-0.5">2</span>
+                    <p><strong>Dán mã nguồn HTML:</strong> Bấm vào <strong>Create new file</strong>, đặt tên file là <code class="text-amber-300">index.html</code>. Sau đó nhấn nút <strong>"Copy Toàn Bộ Mã HTML"</strong> ở bên dưới và dán (Ctrl+V) vào rồi bấm <strong>Commit changes</strong>.</p>
+                </div>
+                <div class="flex items-start gap-3">
+                    <span class="w-6 h-6 rounded-full bg-sky-500 text-slate-950 font-bold flex items-center justify-center text-xs shrink-0 mt-0.5">3</span>
+                    <p><strong>Tải ảnh chân dung lên cùng thư mục:</strong> Tải file ảnh thẻ <code class="text-amber-300">Anh the 2022 1.jpg</code> của anh lên cùng Repository đó (hoặc dùng nút <em>"Chọn ảnh từ máy"</em> ngoài trang chính trước khi bấm Copy mã HTML để ảnh tự động nhúng thẳng vào trong code!).</p>
+                </div>
+                <div class="flex items-start gap-3">
+                    <span class="w-6 h-6 rounded-full bg-sky-500 text-slate-950 font-bold flex items-center justify-center text-xs shrink-0 mt-0.5">4</span>
+                    <p><strong>Bật Github Pages:</strong> Vào mục <strong>Settings</strong> -> <strong>Pages</strong> -> Tại phần <em>Branch</em> chọn <strong>main</strong> và nhấn <strong>Save</strong>. Sau 1 phút, website của anh đã chính thức hoạt động trên toàn cầu!</p>
+                </div>
+            </div>
+
+            <div class="mt-6 flex flex-wrap items-center justify-end gap-3">
+                <button onclick="copyFullHtmlCode()" class="bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-bold px-6 py-3 rounded-xl transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-copy"></i>
+                    <span>Copy Toàn Bộ Mã HTML Ngay</span>
+                </button>
+                <button onclick="closeGithubModal()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium px-5 py-3 rounded-xl">
+                    Đóng
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hộp thông báo Toast (Thay thế hoàn toàn alert) -->
+    <div id="toast-notification" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
+        <div class="bg-slate-900 border border-emerald-500/50 text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center space-x-3">
+            <div class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <span id="toast-message" class="text-sm font-medium">Đã sao chép thành công!</span>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT XỬ LÝ TƯƠNG TÁC -->
+    <script>
+        // 1. Thanh tiến trình đọc bài
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            const progressBar = document.getElementById('progress-bar');
+            if (progressBar) {
+                progressBar.style.width = scrolled + '%';
+            }
+        });
+
+        // 2. Hiển thị thông báo Toast mượt mà
+        function showToast(message) {
+            const toast = document.getElementById('toast-notification');
+            const toastMsg = document.getElementById('toast-message');
+            toastMsg.textContent = message;
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 3500);
+        }
+
+        // 3. Sao chép văn bản vào Clipboard an toàn trên mọi trình duyệt
+        function copyTextToClipboard(text, successMsg) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed";
+            textArea.style.left = "-9999px";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                showToast(successMsg);
+            } catch (err) {
+                showToast("Không thể tự động sao chép, vui lòng copy thủ công.");
+            }
+            document.body.removeChild(textArea);
+        }
+
+        // 4. Sao chép số điện thoại 0963.434868
+        function copyPhoneNumber() {
+            copyTextToClipboard("0963434868", "Đã sao chép số điện thoại: 0963.434868!");
+            const btnText = document.getElementById('copy-phone-text');
+            if (btnText) {
+                btnText.textContent = "Đã lưu: 0963.434868";
+                setTimeout(() => {
+                    btnText.textContent = "Sao chép SĐT / Zalo";
+                }, 3000);
+            }
+        }
+
+        // 5. Cho phép anh chọn trực tiếp ảnh thẻ từ máy tính và tự động gắn vào trang (để khi copy code lên Github không cần lo lỗi đường dẫn ảnh)
+        function handleAvatarUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const dataUrl = e.target.result;
+                const portrait = document.getElementById('author-portrait');
+                const svgPlaceholder = document.getElementById('svg-portrait-placeholder');
+                const cardAvatar = document.getElementById('card-avatar');
+                const cardSvgFallback = document.getElementById('card-svg-fallback');
+                const helper = document.getElementById('photo-helper');
+                
+                if (portrait) {
+                    portrait.src = dataUrl;
+                    portrait.classList.remove('hidden');
+                }
+                if (svgPlaceholder) {
+                    svgPlaceholder.classList.add('hidden');
+                }
+                if (cardAvatar) {
+                    cardAvatar.src = dataUrl;
+                    cardAvatar.classList.remove('hidden');
+                }
+                if (cardSvgFallback) {
+                    cardSvgFallback.classList.add('hidden');
+                }
+                if (helper) {
+                    helper.innerHTML = '<span class="text-emerald-400 font-semibold"><i class="fa-solid fa-circle-check mr-1"></i>Đã gắn ảnh thật của anh vào trang! Hãy bấm Copy mã HTML bên dưới để đưa lên Github.</span>';
+                }
+                
+                showToast("Đã cập nhật đúng ảnh chân dung của anh! Bây giờ anh có thể Copy mã HTML sang Github.");
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // 6. Sao chép toàn bộ mã nguồn HTML hiện tại để dán lên Github
+        function copyFullHtmlCode() {
+            const fullHtml = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+            copyTextToClipboard(fullHtml, "Đã sao chép toàn bộ mã nguồn HTML! Anh chỉ việc dán (Ctrl+V) vào file index.html trên Github.");
+        }
+
+        // 7. Đóng / Mở Modal hướng dẫn Github
+        function openGithubModal() {
+            document.getElementById('github-modal').classList.remove('hidden');
+        }
+        function closeGithubModal() {
+            document.getElementById('github-modal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
